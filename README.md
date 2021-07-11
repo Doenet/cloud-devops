@@ -12,4 +12,8 @@ nixops deploy -d doenet
 ```
 to deploy `doenet.cloud` to AWS.
 
+## dotenv and secrets
+
+This repo relies on `git-crypt` to store secret key material.
+
 

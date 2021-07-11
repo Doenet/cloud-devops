@@ -55,7 +55,7 @@ in
 
     nixpkgs.config.allowUnfree = true;
     environment.systemPackages = with pkgs; [
-      pkgs.redis theServer
+      pkgs.redis theIdServer theApiServer
     ];
     
     services.redis.enable = true;    

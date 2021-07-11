@@ -21,7 +21,7 @@ in
     ];
   };
   
-  circle2 = { resources, config, nodes, ... }:
+  doenet = { resources, config, nodes, ... }:
   let
     theApiServer = import ../api/default.nix;
     apiEnvironment = {

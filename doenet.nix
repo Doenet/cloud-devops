@@ -46,7 +46,7 @@ in
     deployment.targetEnv = "ec2";
     deployment.ec2.accessKeyId = awsKeyId;
     deployment.ec2.region = region;
-    deployment.ec2.instanceType = "t2.medium"; # a cheap one
+    deployment.ec2.instanceType = "t2.medium";
     deployment.ec2.ebsInitialRootDiskSize = 16; # GB
     deployment.ec2.keyPair = resources.ec2KeyPairs.myKeyPair;
     deployment.ec2.associatePublicIpAddress = true;
@@ -118,7 +118,7 @@ in
       wantedBy = [ "default.target" ];
       environment = apiEnvironment // { PORT = "4001"; };
       serviceConfig = {
-        ExecStart = "${theApiServer}/bin/api-server";        
+        ExecStart = "${theApiServer}/bin/doenet-cloud-api";
         User = "doenet";
         Restart = "always";
       };
@@ -130,7 +130,7 @@ in
       wantedBy = [ "default.target" ];
       environment = idEnvironment // { PORT = "3001"; };
       serviceConfig = {
-        ExecStart = "${theIdServer}/bin/id-server";
+        ExecStart = "${theIdServer}/bin/doenet-cloud-id";
         User = "doenet";
         Restart = "always";
       };

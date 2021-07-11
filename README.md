@@ -2,7 +2,7 @@
 
 To make it easier to deploy doenet.cloud, the included `doenet.nix`
 can be used.  Note that `doenet.nix` references other `doenet.cloud`
-repos, so you will need to have the `doenet-api` and `doenet-id` repo
+repos, so you will need to have the `cloud-api` and `cloud-id` repos
 checked out as well.
 
 Then run

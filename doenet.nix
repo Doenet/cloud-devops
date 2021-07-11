@@ -24,6 +24,7 @@ in
   doenet = { resources, config, nodes, ... }:
   let
     theApiServer = import ../api/default.nix;
+    theIdServer = import ../id/default.nix;    
     apiEnvironment = {
       PORT = "4000";
       NODE_ENV = "production";

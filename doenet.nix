@@ -72,6 +72,8 @@ in
       upstreams."api" = {
         servers = {
           "127.0.0.1:4001" = {};
+          "127.0.0.1:4002" = {};
+          "127.0.0.1:4003" = {};          
         };
       };
 
@@ -85,9 +87,11 @@ in
     services.nginx.virtualHosts."id.doenet.cloud" = {
       forceSSL = true;
       enableACME = true;
-      default = true;
-      root = "/var/www/id.doenet.cloud";
+      root = "${theIdServer}/libexec/@doenet/cloud-id/deps/@doenet/cloud-id/public";
       locations = {
+        "/main.css" = {
+          tryFiles = "$uri =404";
+        };        
         "/" = {
           proxyPass = http://id;
         };
@@ -97,8 +101,7 @@ in
     services.nginx.virtualHosts."api.doenet.cloud" = {
       forceSSL = true;
       enableACME = true;
-      default = true;
-      root = "/var/www/api.doenet.cloud";
+      root = "${theApiServer}/libexec/@doenet/cloud-api/deps/@doenet/cloud-api/public";
       locations = {
         "/" = {
           proxyPass = http://api;
@@ -109,8 +112,8 @@ in
     security.acme.acceptTerms = true;
     
     security.acme.certs = {
-      "id.doenet.cloud".email = "fowler@doenet.cloud";
-      "api.doenet.cloud".email = "fowler@doenet.cloud";      
+      "id.doenet.cloud".email = "admin@doenet.cloud";
+      "api.doenet.cloud".email = "admin@doenet.cloud";
     };
     
     systemd.services.api1 = {
@@ -125,6 +128,30 @@ in
       };
     };
 
+    systemd.services.api2 = {
+      description = "api-2 service";
+      after = [ "network.target" ];
+      wantedBy = [ "default.target" ];
+      environment = apiEnvironment // { PORT = "4002"; };
+      serviceConfig = {
+        ExecStart = "${theApiServer}/bin/doenet-cloud-api";
+        User = "doenet";
+        Restart = "always";
+      };
+    };
+
+    systemd.services.api3 = {
+      description = "api-3 service";
+      after = [ "network.target" ];
+      wantedBy = [ "default.target" ];
+      environment = apiEnvironment // { PORT = "4003"; };
+      serviceConfig = {
+        ExecStart = "${theApiServer}/bin/doenet-cloud-api";
+        User = "doenet";
+        Restart = "always";
+      };
+    };
+    
     systemd.services.id1 = {
       description = "id-1 service";
       after = [ "network.target" ];
